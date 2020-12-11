@@ -1,5 +1,6 @@
 package br.com.rosin.testeCres.dto;
 
+import br.com.rosin.testeCres.utils.DateUtils;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -20,4 +21,12 @@ public class NovaSimulacaoDto {
     private String numeroContratoEmprestimo;
     private LocalDate dataFim;
     private LocalDate dataNascimento;
+
+    public int idade() {
+        return DateUtils.calculaDiferencaAnos(dataNascimento, LocalDate.now());
+    }
+
+    public int periodoEmMeses() {
+        return DateUtils.calculaDiferencaMeses(LocalDate.now(), this.dataFim);
+    }
 }

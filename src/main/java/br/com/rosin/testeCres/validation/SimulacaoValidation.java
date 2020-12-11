@@ -12,11 +12,12 @@ public class SimulacaoValidation {
 
     public void validar(NovaSimulacaoDto novaSimulacao) {
         final var dataAtual = LocalDate.now();
+        final var periodo = novaSimulacao.periodoEmMeses();
 
-        if (DateUtils.calculaDiferencaMeses(dataAtual, novaSimulacao.getDataFim()) > 120) {
+        if (periodo > 120) {
             throw new RuntimeException("Simulação deve conter no máximo 120 meses");
         }
-        if (DateUtils.calculaDiferencaMeses(dataAtual, novaSimulacao.getDataFim()) < 1) {
+        if (periodo < 1) {
             throw new RuntimeException("Simulação deve conter no mínimo 1 mês");
         }
 

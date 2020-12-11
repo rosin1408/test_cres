@@ -20,7 +20,7 @@ public class CriarSimulacao {
 
     public Simulacao criar(NovaSimulacaoDto novaSimulacao) {
         final var dataAtual = LocalDate.now();
-        final var idade = definirIdade(novaSimulacao.getDataNascimento(), dataAtual);
+        final var idade = novaSimulacao.idade();
         final var produto = produtoService.findProdutoByIdade(idade);
 
         if (produto == null) {
@@ -36,24 +36,16 @@ public class CriarSimulacao {
                 .dataSimulacao(dataAtual)
                 .fimContratoEmprestimo(novaSimulacao.getDataFim())
                 .produtoEscolhido(produto)
-                .valorTotalPremio(calculaValorTotalPremio(produto, novaSimulacao, dataAtual))
+                .valorTotalPremio(calculaValorTotalPremio(produto, novaSimulacao))
                 .build();
     }
 
-    private BigDecimal calculaValorTotalPremio(Produto produto, NovaSimulacaoDto novaSimulacao, LocalDate dataAtual) {
+    private BigDecimal calculaValorTotalPremio(Produto produto, NovaSimulacaoDto novaSimulacao) {
         final var taxaJuros = produto.getTaxaJuros();
         final var valorSegurado = novaSimulacao.getValorSegurado();
-        final var numeroMeses = calcularNumeroMeses(novaSimulacao.getDataFim(), dataAtual);
+        final var numeroMeses = novaSimulacao.periodoEmMeses();
 
         final var valor = valorSegurado.multiply(taxaJuros.divide(new BigDecimal(1000))).multiply(new BigDecimal(numeroMeses));
         return valor.compareTo(produto.getValorMinimoPremio()) < 0 ? produto.getValorMinimoPremio() : valor;
-    }
-
-    private int definirIdade(LocalDate dataNascimento, LocalDate dataAtual) {
-        return DateUtils.calculaDiferencaAnos(dataNascimento, dataAtual);
-    }
-
-    private int calcularNumeroMeses(LocalDate dataFinal, LocalDate dataAtual) {
-        return DateUtils.calculaDiferencaMeses(dataAtual, dataFinal);
     }
 }
