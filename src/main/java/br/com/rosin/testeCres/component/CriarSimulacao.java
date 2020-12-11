@@ -45,7 +45,8 @@ public class CriarSimulacao {
         final var valorSegurado = novaSimulacao.getValorSegurado();
         final var numeroMeses = calcularNumeroMeses(novaSimulacao.getDataFim(), dataAtual);
 
-        return valorSegurado.multiply(taxaJuros.divide(new BigDecimal(1000))).multiply(new BigDecimal(numeroMeses));
+        final var valor = valorSegurado.multiply(taxaJuros.divide(new BigDecimal(1000))).multiply(new BigDecimal(numeroMeses));
+        return valor.compareTo(produto.getValorMinimoPremio()) < 0 ? produto.getValorMinimoPremio() : valor;
     }
 
     private int definirIdade(LocalDate dataNascimento, LocalDate dataAtual) {
