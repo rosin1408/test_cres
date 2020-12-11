@@ -23,6 +23,9 @@ public class CriarSimulacao {
         final var idade = definirIdade(novaSimulacao.getDataNascimento(), dataAtual);
         final var produto = produtoService.findProdutoByIdade(idade);
 
+        if (produto == null) {
+            throw new RuntimeException("Não foi encontrado um produto compatível com a idade do segurado");
+        }
         return Simulacao.builder()
                 .nomePessoa(novaSimulacao.getNomePessoa())
                 .cpf(novaSimulacao.getCpf())
