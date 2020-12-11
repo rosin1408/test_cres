@@ -15,8 +15,6 @@ public class SimulacaoService {
     private final CriarSimulacao criarSimulacao;
 
     public Simulacao novo(NovaSimulacaoDto novaSimulacao) {
-        System.out.println(novaSimulacao);
-        criarSimulacao.criar(novaSimulacao);
-        return Simulacao.builder().build();
+        return criarSimulacao.criar(novaSimulacao);
     }
 }

@@ -7,6 +7,7 @@ import br.com.rosin.testeCres.service.ProdutoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -17,13 +18,37 @@ public class CriarSimulacao {
     final ProdutoService produtoService;
 
     public Simulacao criar(NovaSimulacaoDto novaSimulacao) {
-        final var idade = definirIdade(novaSimulacao.getDataNascimento());
+        final var dataAtual = LocalDate.now();
+        final var idade = definirIdade(novaSimulacao.getDataNascimento(), dataAtual);
         final var produto = produtoService.findProdutoByIdade(idade);
 
-        return Simulacao.builder().build();
+        return Simulacao.builder()
+                .nomePessoa(novaSimulacao.getNomePessoa())
+                .cpf(novaSimulacao.getCpf())
+                .dataSimulacao(dataAtual)
+                .valorSegurado(novaSimulacao.getValorSegurado())
+                .numeroContratoEmprestimo(novaSimulacao.getNumeroContratoEmprestimo())
+                .dataNascimento(novaSimulacao.getDataNascimento())
+                .dataSimulacao(dataAtual)
+                .fimContratoEmprestimo(novaSimulacao.getDataFim())
+                .produtoEscolhido(produto)
+                .valorTotalPremio(calculaValorTotalPremio(produto, novaSimulacao, dataAtual))
+                .build();
     }
 
-    private int definirIdade(LocalDate dataNascimento) {
-        return Period.between(dataNascimento, LocalDate.now()).getDays();
+    private BigDecimal calculaValorTotalPremio(Produto produto, NovaSimulacaoDto novaSimulacao, LocalDate dataAtual) {
+        final var taxaJuros = produto.getTaxaJuros();
+        final var valorSegurado = novaSimulacao.getValorSegurado();
+        final var numeroMeses = calcularNumeroMeses(novaSimulacao.getDataFim(), dataAtual);
+
+        return valorSegurado.multiply(taxaJuros.divide(new BigDecimal(1000))).multiply(new BigDecimal(numeroMeses));
+    }
+
+    private int definirIdade(LocalDate dataNascimento, LocalDate dataAtual) {
+        return Period.between(dataNascimento, dataAtual).getYears();
+    }
+
+    private int calcularNumeroMeses(LocalDate dataFinal, LocalDate dataAtual) {
+        return Period.between(dataAtual, dataFinal).getMonths();
     }
 }
