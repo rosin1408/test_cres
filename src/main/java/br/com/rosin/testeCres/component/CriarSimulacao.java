@@ -4,6 +4,7 @@ import br.com.rosin.testeCres.dto.NovaSimulacaoDto;
 import br.com.rosin.testeCres.model.Produto;
 import br.com.rosin.testeCres.model.Simulacao;
 import br.com.rosin.testeCres.service.ProdutoService;
+import br.com.rosin.testeCres.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -45,10 +46,10 @@ public class CriarSimulacao {
     }
 
     private int definirIdade(LocalDate dataNascimento, LocalDate dataAtual) {
-        return Period.between(dataNascimento, dataAtual).getYears();
+        return DateUtils.calculaDiferencaAnos(dataNascimento, dataAtual);
     }
 
     private int calcularNumeroMeses(LocalDate dataFinal, LocalDate dataAtual) {
-        return Period.between(dataAtual, dataFinal).getMonths();
+        return DateUtils.calculaDiferencaMeses(dataAtual, dataFinal);
     }
 }
