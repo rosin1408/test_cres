@@ -4,6 +4,7 @@ import br.com.rosin.testeCres.model.Simulacao;
 import br.com.rosin.testeCres.service.SimulacaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +22,8 @@ public class SimulacaoController {
         return List.of();
     }
 
-    @GetMapping("/#{id}")
-    public Simulacao findById(Long id) {
+    @GetMapping("/{id}")
+    public Simulacao findById(@PathVariable Long id) {
         return Simulacao.builder().build();
     }
 }
