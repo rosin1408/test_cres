@@ -16,4 +16,8 @@ public class ProdutoService {
     public List<Produto> findAll() {
         return repository.findAll();
     }
+
+    public Produto findProdutoByIdade(int idade) {
+        return repository.findProdutoByIdade(idade);
+    }
 }
