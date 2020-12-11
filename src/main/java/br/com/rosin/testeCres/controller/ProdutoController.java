@@ -20,7 +20,7 @@ public class ProdutoController {
 
     @GetMapping("/")
     public List<Produto> all() {
-        return List.of();
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
