@@ -1,5 +1,7 @@
 package br.com.rosin.testeCres.service;
 
+import br.com.rosin.testeCres.dto.NovaSimulacaoDto;
+import br.com.rosin.testeCres.model.Simulacao;
 import br.com.rosin.testeCres.repository.SimulacaoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,4 +11,9 @@ import org.springframework.stereotype.Service;
 public class SimulacaoService {
 
     private final SimulacaoRepository repository;
+
+    public Simulacao novo(NovaSimulacaoDto novaSimulacao) {
+        System.out.println(novaSimulacao);
+        return Simulacao.builder().build();
+    }
 }
