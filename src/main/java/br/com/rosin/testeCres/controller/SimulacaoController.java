@@ -17,7 +17,7 @@ public class SimulacaoController {
 
     @GetMapping("/")
     public List<Simulacao> all() {
-        return List.of();
+        return service.all();
     }
 
     @GetMapping("/{id}")

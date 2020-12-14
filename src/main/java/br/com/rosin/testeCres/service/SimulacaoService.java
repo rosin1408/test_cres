@@ -8,6 +8,8 @@ import br.com.rosin.testeCres.validation.SimulacaoValidation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class SimulacaoService {
@@ -21,5 +23,9 @@ public class SimulacaoService {
         final var simulacao = criarSimulacao.criar(novaSimulacao);
 
         return repository.save(simulacao);
+    }
+
+    public List<Simulacao> all() {
+        return repository.findAll();
     }
 }

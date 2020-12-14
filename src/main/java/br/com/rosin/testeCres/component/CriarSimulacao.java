@@ -4,13 +4,11 @@ import br.com.rosin.testeCres.dto.NovaSimulacaoDto;
 import br.com.rosin.testeCres.model.Produto;
 import br.com.rosin.testeCres.model.Simulacao;
 import br.com.rosin.testeCres.service.ProdutoService;
-import br.com.rosin.testeCres.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 
 @Component
 @AllArgsConstructor
